@@ -4,6 +4,7 @@ var parseAddress = require('../views/parseAddress.js');
 
 var socket = io();
 
+
 function addToList(item) {
   list  = document.getElementById('playlist');
   var entry = document.createElement('img');
@@ -46,6 +47,9 @@ document.addEventListener('DOMContentLoaded', function() {
     socket.on('added', function(data) {
       addToList(data);
     });
+
+    
+
   } else if (window.location.pathname === '/play') {
 
     socket.on('start', function(data) {
@@ -53,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
         window.data.push(parseAddress(f.url));
       }
       if (window.data.length > 0) {
-        player.loadVideoById(window.data.pop());
+        player.loadVideoById(window.data.pop());        
       }
     });
 
@@ -62,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
     socket.on('added', function(data) {
       window.data.push(parseAddress(data.url));
       if (player.getPlayerState() < 1)
-        player.loadVideoById(window.data.pop());
+        player.loadVideoById(window.data.pop());        
     });
   }
 
