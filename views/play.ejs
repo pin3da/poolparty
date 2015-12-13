@@ -33,6 +33,7 @@ function onPlayerStateChange(event) {
     if (window.data.length > 0) {
       player.loadVideoById(window.data.pop());
     }
+    window.socket.emit('delete');
   }
 }
 
@@ -59,8 +60,5 @@ function send() {
 </script>
 <body>
  <div id="player"></div>
- <br />
- <input type="text" id="idVideo">
- <button onclick="send()" > Agregar </button>
 </body>
 <%- include('footer') -%>
