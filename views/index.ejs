@@ -20,14 +20,13 @@ function onYouTubePlayerAPIReady(video) {
 
 // autoplay video
 function onPlayerReady(event) {
-  if (player.getVideoData().video_id !== null) {
+  if (player.getVideoData().video_id !== '') {
     event.target.playVideo();
   }
 }
 
 // when video ends
 function onPlayerStateChange(event) {
-  //console.log(event);
   if (event.data === 0) {
     if (data.length > 0) {
       player.loadVideoById(data.pop());
@@ -55,10 +54,12 @@ function send() {
 }
 
 </script>
+
 <body>
- <div id="player"></div>
- <br />
- <input type="text" id="idVideo">
- <button onclick="send()" > Agregar </button>
+  <div id="player"></div>
+  <br />
+  <input type="text" id="idVideo">
+  <button onclick="send()" > Agregar </button>
 </body>
+
 <%- include('footer') -%>
