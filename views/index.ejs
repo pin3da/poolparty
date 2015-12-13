@@ -1,64 +1,17 @@
 <%- include('header') -%>
-<script src="http://www.youtube.com/player_api"></script>
-<script>
 
-// create youtube player
-var player;
-var data = [];
-
-function onYouTubePlayerAPIReady(video) {
-  player = new YT.Player('player', {
-    height: '390',
-    width: '640',
-    events: {
-      'onReady': onPlayerReady,
-      'onStateChange': onPlayerStateChange
-    }
-
-  });
-}
-
-// autoplay video
-function onPlayerReady(event) {
-  if (player.getVideoData().video_id !== null) {
-    event.target.playVideo();
-  }
-}
-
-// when video ends
-function onPlayerStateChange(event) {
-  //console.log(event);
-  if (event.data === 0) {
-    if (data.length > 0) {
-      player.loadVideoById(data.pop());
-    }
-  }
-}
-
-function parseAddress(address) {
-  var arr = address.split('=');
-  if (arr.length > 1) {
-    return arr[1].split('&')[0];
-  } else {
-    return arr[0].split('&')[0];
-  }
-}
-
-function send() {
-  var id = document.getElementById("idVideo").value;
-
-  if (player.getCurrentTime() === player.getDuration() && data.length === 0) {
-    player.loadVideoById(parseAddress(id));
-  } else {
-    data.push(parseAddress(id));
-  }
-}
-
-</script>
 <body>
- <div id="player"></div>
- <br />
- <input type="text" id="idVideo">
- <button onclick="send()" > Agregar </button>
+  <div id="playlist">
+    <ul>
+      {{#playlist}}
+        <li> {{url}} </li>
+      {{/playlist}}
+    </ul>
+  </div>
+  <div>
+    <input type="text" placeholder="put your cool music here"
+           id="songText"></input>
+    <button id="sendButton"> Send </button>
+  </div>
 </body>
 <%- include('footer') -%>
