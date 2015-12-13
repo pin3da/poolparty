@@ -20,9 +20,11 @@ function sendData() {
   var songText = document.getElementById('songText');
   var urlPre = 'http://img.youtube.com/vi/' + parseAddress(songText.value) + '/0.jpg';
   var data = {url: songText.value, prev: urlPre};
-  socket.emit('add song', data);
-  addToList(data);
-  songText.value = "";
+  if (data.url !== '') {
+    socket.emit('add song', data);
+    addToList(data);
+    songText.value = "";
+  }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
