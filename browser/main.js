@@ -50,25 +50,34 @@ document.addEventListener('DOMContentLoaded', function() {
       addToList(data);
     });
 
-    
+    socket.on('delete', function() {
+      console.log('delete on list');
+      var t = document.querySelector('#playlist');
+      if (t.children.length > 0)
+        t.removeChild(t.children[0]);
+    });
 
   } else if (window.location.pathname === '/play') {
+    window.socket = socket;
 
     socket.on('start', function(data) {
       for (var i = 0, f; f = data.playlist[i]; ++i) {
         window.data.push(parseAddress(f.url));
       }
       if (window.data.length > 0) {
-        player.loadVideoById(window.data.pop());        
+        player.loadVideoById(window.data.pop());
       }
     });
-
-    window.socket = socket;
 
     socket.on('added', function(data) {
       window.data.push(parseAddress(data.url));
       if (player.getPlayerState() < 1)
-        player.loadVideoById(window.data.pop());        
+        player.loadVideoById(window.data.pop());
+    });
+
+    socket.on('delete', function() {
+      console.log('delete on player');
+      window.data.pop();
     });
   }
 

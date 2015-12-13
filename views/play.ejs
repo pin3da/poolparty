@@ -30,11 +30,10 @@ function onPlayerReady(event) {
 function onPlayerStateChange(event) {
   //console.log(event);
   if (event.data === 0) {
+    window.socket.emit('delete');
     if (window.data.length > 0) {
       player.loadVideoById(window.data.pop());
-      window.socket.emit('delete');
     }
-    
   }
 }
 
@@ -53,7 +52,7 @@ function send() {
   if (player.getCurrentTime() === player.getDuration()
         && window.data.length === 0) {
     player.loadVideoById(parseAddress(id));
-    window.socket.emit('delete');
+    console.log(window.socket);
   } else {
     window.data.push(parseAddress(id));
   }

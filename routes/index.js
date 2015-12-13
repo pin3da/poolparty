@@ -22,6 +22,14 @@ module.exports = function(app, io) {
     socket.on('query', function(data) {
       socket.emit('start', list);
     })
+
+    socket.on('delete', function() {
+      console.log('Deleted song');
+      socket.broadcast.emit('delete');
+      if (list.playlist.length > 0) {
+        list.playlist.shift();
+      }
+    })
   });
 
 };
