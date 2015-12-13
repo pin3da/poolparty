@@ -18,5 +18,10 @@ module.exports = function(app, io) {
       list.playlist.push(data);
       socket.broadcast.emit('added', data);
     });
+
+    socket.on('query', function(data) {
+      socket.emit('start', list);
+    })
   });
+
 };

@@ -5,7 +5,7 @@
 
 // create youtube player
 var player;
-var data = [];
+window.data = [];
 
 function onYouTubePlayerAPIReady(video) {
   player = new YT.Player('player', {
@@ -15,23 +15,23 @@ function onYouTubePlayerAPIReady(video) {
       'onReady': onPlayerReady,
       'onStateChange': onPlayerStateChange
     }
-
   });
 }
 
 // autoplay video
 function onPlayerReady(event) {
-  if (player.getVideoData().video_id !== null) {
+  if (player.getVideoData().video_id !== '') {
     event.target.playVideo();
   }
+  window.socket.emit('query');
 }
 
 // when video ends
 function onPlayerStateChange(event) {
   //console.log(event);
   if (event.data === 0) {
-    if (data.length > 0) {
-      player.loadVideoById(data.pop());
+    if (window.data.length > 0) {
+      player.loadVideoById(window.data.pop());
     }
   }
 }
@@ -48,10 +48,11 @@ function parseAddress(address) {
 function send() {
   var id = document.getElementById("idVideo").value;
 
-  if (player.getCurrentTime() === player.getDuration() && data.length === 0) {
+  if (player.getCurrentTime() === player.getDuration()
+        && window.data.length === 0) {
     player.loadVideoById(parseAddress(id));
   } else {
-    data.push(parseAddress(id));
+    window.data.push(parseAddress(id));
   }
 }
 
