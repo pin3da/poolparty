@@ -1,18 +1,24 @@
 var io = require('socket.io-client');
 var Handlebars = require('handlebars');
+var parseAddress = require('../views/parseAddress.js');
 
 var socket = io();
 
 function addToList(item) {
   list  = document.getElementById('playlist');
-  var entry = document.createElement('li');
-  entry.appendChild(document.createTextNode(item.url));
+  var entry = document.createElement('img');
+  var img = item.prev;
+  entry.setAttribute('src', img);
+  entry.setAttribute('width', '200');
+  entry.setAttribute('height', '150');
+
   list.appendChild(entry);
 }
 
 function sendData() {
   var songText = document.getElementById('songText');
-  var data = {url: songText.value};
+  var urlPre = 'http://img.youtube.com/vi/' + parseAddress(songText.value) + '/0.jpg';
+  var data = {url: songText.value, prev: urlPre};
   socket.emit('add song', data);
   addToList(data);
   songText.value = "";
@@ -27,7 +33,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     socket.on('start', function(data) {
       playlistT.innerHTML = template(data);
-      // console.log(data);
     });
 
     var send = document.getElementById('sendButton');
