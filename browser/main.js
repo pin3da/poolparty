@@ -65,19 +65,19 @@ document.addEventListener('DOMContentLoaded', function() {
         window.data.push(parseAddress(f.url));
       }
       if (window.data.length > 0) {
-        player.loadVideoById(window.data.pop());
+        player.loadVideoById(window.data.shift());
       }
     });
 
     socket.on('added', function(data) {
       window.data.push(parseAddress(data.url));
       if (player.getPlayerState() < 1)
-        player.loadVideoById(window.data.pop());
+        player.loadVideoById(window.data.shift());
     });
 
     socket.on('delete', function() {
       console.log('delete on player');
-      window.data.pop();
+      window.data.shift();
     });
   }
 

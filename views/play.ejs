@@ -32,7 +32,7 @@ function onPlayerStateChange(event) {
   if (event.data === 0) {
     window.socket.emit('delete');
     if (window.data.length > 0) {
-      player.loadVideoById(window.data.pop());
+      player.loadVideoById(window.data.shift());
     }
   }
 }
@@ -59,7 +59,7 @@ function send() {
 }
 
 function nextSong() {
-  player.loadVideoById(window.data.pop());
+  player.loadVideoById(window.data.shift());
   window.socket.emit('delete');
 }
 
