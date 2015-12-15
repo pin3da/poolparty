@@ -58,8 +58,14 @@ function send() {
   }
 }
 
+function nextSong() {
+  player.loadVideoById(window.data.pop());
+  window.socket.emit('delete');
+}
+
 </script>
 <body>
- <div id="player"></div>
+ <div id="player"></div> <br>
+ <button id="next" onclick=nextSong();> Siguiente </button>
 </body>
 <%- include('footer') -%>
