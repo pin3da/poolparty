@@ -26,7 +26,11 @@ module.exports = function(app, io) {
           io.emit('added', data);
           list.playlist.push(data);
         }
-
+        else {
+          data['info'] = {'title': ''};
+          io.emit('added', data);
+          list.playlist.push(data);
+        }
       })
 
     });
