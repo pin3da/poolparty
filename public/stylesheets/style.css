@@ -6,3 +6,34 @@ body {
 a {
   color: #00B7FF;
 }
+
+#playlistTemplate {
+  margin: 10px;
+}
+
+#playlist {
+  display:table
+}
+
+#item {
+  float: left;
+  margin-top: 20px;
+  margin-right: 10px;
+  display: table-row;
+}
+
+#title {
+  width: 200px;
+  height: 50px;
+  overflow: hidden;
+  margin-bottom: 0px;
+}
+
+#divInput {
+  position: absolute;
+}
+
+#img {
+  width: 200px;
+  height: 150px;
+}
