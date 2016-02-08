@@ -1,4 +1,5 @@
 
+var request = require("request");
 var list = { playlist: [] };
 
 module.exports = function(app, io) {
@@ -15,8 +16,19 @@ module.exports = function(app, io) {
     console.log('a user connected');
     socket.on('add song', function(data) {
       console.log('Add song');
-      list.playlist.push(data);
-      socket.broadcast.emit('added', data);
+      var urlInfo = 'https://www.youtube.com/oembed?url=' +
+      data.url + '&format=json';
+
+      request(urlInfo, function(err, res, body) {
+        if (!err && res.statusCode == 200) {
+          var info = JSON.parse(body);
+          data['info'] = info;
+          io.emit('added', data);
+          list.playlist.push(data);
+        }
+
+      })
+
     });
 
     socket.on('query', function(data) {

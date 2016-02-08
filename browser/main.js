@@ -7,13 +7,21 @@ var socket = io();
 
 function addToList(item) {
   list  = document.getElementById('playlist');
+  var div = document.createElement('div')
+  div.setAttribute('id', 'item');
+
+  var title = document.createElement('h3');
+  title.innerHTML = item.info.title;
+  title.setAttribute('id', 'title');
+
   var entry = document.createElement('img');
   var img = item.prev;
   entry.setAttribute('src', img);
-  entry.setAttribute('width', '200');
-  entry.setAttribute('height', '150');
+  entry.setAttribute('id', 'img');
 
-  list.appendChild(entry);
+  div.appendChild(title);
+  div.appendChild(entry);
+  list.appendChild(div);
 }
 
 function sendData() {
@@ -22,7 +30,6 @@ function sendData() {
   var data = {url: songText.value, prev: urlPre};
   if (data.url !== '') {
     socket.emit('add song', data);
-    addToList(data);
     songText.value = "";
   }
 }

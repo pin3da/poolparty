@@ -1,15 +1,20 @@
 <%- include('header') -%>
 
 <body>
+  <a target="_blank" href="/play"> Go to Play </a> <br>
+
   <div id="playlistTemplate">
-    <ul id="playlist">
+    <div id="playlist">
       {{#playlist}}
+      <div id="item">
+        <h3 id="title">{{info.title}}</h3>
         <a href='{{url}}'></a>
-        <img src={{prev}} width=200 height=150> </img>
+        <img id="img" src={{prev}}> </img>
+      </div>
       {{/playlist}}
-    </ul>
+    </div>
   </div>
-  <div>
+  <div id="divInput">
     <input type="text" placeholder="put your cool music here"
            id="songText"></input>
     <button id="sendButton"> Send </button>
