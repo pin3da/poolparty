@@ -59,13 +59,15 @@ function send() {
 }
 
 function nextSong() {
-  player.loadVideoById(window.data.shift());
-  window.socket.emit('delete');
+  if(window.data.length > 0){
+    player.loadVideoById(window.data.shift());
+    window.socket.emit('delete');
+  }
 }
 
 </script>
 <body>
  <div id="player"></div> <br>
- <button id="next" onclick=nextSong();> Siguiente </button>
+ <button id="next" onclick=nextSong();> Next </button>
 </body>
 <%- include('footer') -%>
