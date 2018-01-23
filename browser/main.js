@@ -26,11 +26,14 @@ function addToList(item) {
 
 function sendData() {
   var songText = document.getElementById('songText');
-  var urlPre = 'http://img.youtube.com/vi/' + parseAddress(songText.value) + '/0.jpg';
-  var data = {url: songText.value, prev: urlPre};
-  if (data.url !== '') {
-    socket.emit('add song', data);
-    songText.value = "";
+  if (parseAddress(songText.value) !== "invalid") {
+    var urlPre = 'http://img.youtube.com/vi/' + parseAddress(songText.value) + '/0.jpg';
+    console.log(urlPre);
+    var data = {url: songText.value, prev: urlPre};
+    if (data.url !== '') {
+      socket.emit('add song', data);
+      songText.value = "";
+    }
   }
 }
 
@@ -69,7 +72,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     socket.on('start', function(data) {
       for (var i = 0, f; f = data.playlist[i]; ++i) {
-        window.data.push(parseAddress(f.url));
+        if (parseAddress(f.url) !== "invalid")
+          window.data.push(parseAddress(f.url));
       }
       if (window.data.length > 0) {
         player.loadVideoById(window.data.shift());
@@ -77,9 +81,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     socket.on('added', function(data) {
-      window.data.push(parseAddress(data.url));
-      if (player.getPlayerState() < 1)
+      if (parseAddress(data.url) !== "invalid") {
+        window.data.push(parseAddress(data.url));
+        if (player.getPlayerState() < 1)
         player.loadVideoById(window.data.shift());
+      }
     });
 
     socket.on('delete', function() {
