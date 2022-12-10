@@ -18,7 +18,7 @@
     "express": "^4.17.3",
     "handlebars": "^4.7.7",
     "morgan": "^1.9.1",
-    "request": "^2.69.0",
+    "request": "^2.88.2",
     "serve-favicon": "^2.5.0",
     "socket.io": "^2.4.0",
     "socket.io-client": "^2.2.0",
